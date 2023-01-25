@@ -2,6 +2,7 @@ version: "3"
 
 services:
   react-app:
+    container_name: client-container
     image: react-app
     stdin_open: true
     ports:
@@ -9,14 +10,14 @@ services:
     networks:
       - mern-app
   api-server:
+    container_name: server-container
     image: api-server
     ports:
       - "3080:3080"
     networks:
       - mern-app
-    depends_on:
-      - mongo
   mongodb:
+    container_name: mongo
     image: mongo
     restart: always
     ports:
