@@ -4,12 +4,14 @@ From node:18.13.0
 
 WORKDIR /app
 
-COPY  package*.json ./
+#COPY  package*.json ./
 
-RUN npm install --silent
+COPY package.json /app/package.json
+
+RUN npm install 
 
 COPY . .
 
-EXPOSE 3000
+#EXPOSE 3000
 
 CMD ["npm","start"]

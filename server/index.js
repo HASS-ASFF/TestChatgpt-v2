@@ -14,7 +14,7 @@ connectDB()
 
 const configuration = new Configuration({
     organization: "org-K7F84jRKxGtEXvYi7YzVdsBx",
-    apiKey: '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',
+    apiKey: process.env.API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 

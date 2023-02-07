@@ -1,36 +1,58 @@
 version: "3"
 
 services:
+
+
   react-app:
     container_name: client-container
-    image: react-app
+    image: chatapp
     stdin_open: true
     ports:
       - "3000:3000"
-    networks:
-      - mern-app
+    #networks:
+    #  - mern-app
+
+
   api-server:
     container_name: server-container
-    image: api-server
+    image: server
+    restart: always
     ports:
       - "3080:3080"
     networks:
       - mern-app
+    depends_on:
+      - mongodb
+    environment:
+      - DB_HOST=mongodb
+      - DB_USER=root
+      - DB_PASSWORD=admin123
+      - DB_NAME=chathistory
+      - DB_PORT=27017
+      - WAIT_HOSTS=mongodb:27017
+      - MONGODB_CONNSTRING=mongodb://root:admin123@mongodb
+
+
   mongodb:
-    container_name: mongo
-    image: mongo
+    container_name: db-container
+    image: mongo:6
     restart: always
     ports:
       - "27017:27017"
     networks:
       - mern-app
     volumes:
-      - mongo-data:/data/db
+      - ./mongodb/db:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=admin123
+      - MONGO_INITDB_DATABASE=chathistory
+
 
 networks:
   mern-app:
     driver: bridge
 volumes:
-  mongo-data:
+  mongodb:
     driver: local
   

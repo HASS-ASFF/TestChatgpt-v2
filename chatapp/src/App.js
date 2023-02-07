@@ -7,7 +7,7 @@ function App() {
   const [input,setInput] = useState("");
   const [chatLog,setChatLog] = useState([]);
   const [chatHistory,setChathistory] = useState([]);
-  let isHistory = false;
+  const [isHistory, setHistory] = useState(false);
 
   useEffect(()=>{
     gethistory();
@@ -23,13 +23,13 @@ function App() {
 
   async function clearChat(){
     //console.log(chatLog);
-    isHistory=false;
+    setHistory(false);
     setChatLog([]);
   }
 
   async function showHistory(){
     setChatLog(chatHistory);
-    isHistory = true;
+    setHistory(true);
     //console.log(chatLog);
   }
 
@@ -74,7 +74,7 @@ function App() {
         <div className='chat-log'>
 
           {chatLog.map((message,index)=>(
-            <ChatMessage isHistory={isHistory} key={index} message={message} />
+            <ChatMessage isHistory={isHistory}  key={index} message={message} />
           ))}
 
           
@@ -101,7 +101,7 @@ const ChatMessage = ({ message },isHistory) =>{
     <div className={`chat-message ${message.user}`}>
             <div className='chat-message-center'>
             <div className='message'>
-              {isHistory ? message : message.message}
+              {isHistory?message:message.message}
             </div>
             </div>
           </div>
